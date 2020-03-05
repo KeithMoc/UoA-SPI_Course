@@ -1,0 +1,39 @@
+// Program01
+// Purporse: calculate mean and standard deviation
+class Program01
+{
+private:
+public:
+    // constructor
+    constructor Program01 newProgram01()
+    {
+        return this;
+    }
+    
+    // calculate mean
+    Number calMean(Number[] inputs, Number numberOfInputs)
+    {
+        Number i ;
+        Number sum ;
+        
+        for (i = 0; i < #inputs; i = i + 1)
+        {   
+            sum = sum + inputs[i] ;
+        }
+        return sum/numberOfInputs;
+    }
+    
+    // calculate deviation
+    Number calDeviation(Number mean, Number[] inputs, Number numberOfInputs)
+    {
+        Number i ;
+        Number sum ;
+        Number temp ;
+        for (i = 0; i < #inputs; i = i + 1)
+        {   
+            temp = Math.pow(inputs[i] - mean,2) ;
+            sum = sum + temp;
+        }
+        return Math.sqrt(sum/numberOfInputs) ;
+    }
+}

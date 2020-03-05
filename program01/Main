@@ -1,0 +1,77 @@
+// import user defined functions from other classes
+extern static Program01 Program01.newProgram01() ;
+extern Number Program01.calMean(Number[],Number) ;
+extern Number Program01.calDeviation(Number,Number[],Number) ;
+// Default Main
+class Main
+{
+private:
+public:
+    // Main Function
+    static void main(Number argc, String[] argv)
+    {
+        Program01 prog ;
+        Number mean,dev ;
+        Number i ;
+        Number[] numInputs ;
+        String inputBuffer ;
+        String charBuffer ;
+        Boolean hasPrecision ;
+        if (IO.eof() == true)
+        {
+            IO.printString("OOPS!\n") ;
+            IO.exit(0) ;
+        }
+        // get first char
+        hasPrecision = false ;
+        charBuffer = IO.readChar() ;
+        while (IO.eof() == false)
+        {
+            // if is a digit
+            //IO.printString("input:" + charBuffer + "\n") ;
+            if (String.isdigit(charBuffer))
+            {
+                inputBuffer = "" ;
+                do
+                {
+                    if (charBuffer == ".")
+                    {
+                        if (hasPrecision == false)
+                        {
+                            hasPrecision = true ;
+                        }
+                        else
+                        {
+                            break ;
+                        }
+                    }
+                    inputBuffer = inputBuffer + charBuffer ;
+                    charBuffer = IO.readChar() ;
+                }
+                while (charBuffer == "." || String.isdigit(charBuffer));
+                if (String.charAt(inputBuffer, String.length(inputBuffer) - 1) == ".")
+                {
+                    inputBuffer = inputBuffer + "0" ;
+                }
+                numInputs[] = String.toNumber(inputBuffer) ;
+                hasPrecision = false;
+                //IO.printString(inputBuffer + "\n") ;
+            }
+            else
+            {
+                charBuffer = IO.readChar() ;
+            }
+        }
+        for (i = 0; i < #numInputs; i = i + 1)
+        {
+            //IO.printString("input: " + Math.toFixed(numInputs[i],1) + "\n") ;    
+        }
+        prog = Program01.newProgram01() ;
+        mean = prog.calMean(numInputs,#numInputs) ;
+        dev = prog.calDeviation(Math.round(mean),numInputs,#numInputs) ;
+        //IO.printString("Mean ") ;
+        IO.printString(Math.toFixed(mean, 2) + "\n") ;
+        //IO.printString("\nStdDev ") ;
+        //IO.printString(Math.toFixed(dev, 2)) ;
+    }
+}
