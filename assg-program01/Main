@@ -1,0 +1,50 @@
+// import user defined functions from other classes
+extern LinkedList LinkedList.insert(Number) ;
+extern Number LinkedList.count() ;
+extern static Number AverageCal.calMean(LinkedList) ;
+extern static Number AverageCal.calDeviation(LinkedList, Number) ;
+extern static void Tokeniser.initialise() ;
+extern static String Tokeniser.next_token() ;
+// Default Main
+class Main
+{
+private:
+public:
+    // exit program
+    static void exitProgram()
+    {
+        IO.printString("OOPS!\n") ;
+        IO.exit(0) ;
+    }
+    
+    // Main Function
+    static void main(Number argc, String[] argv)
+    {
+        Number mean,dev ;
+        String inputBuffer ;
+        LinkedList list ;
+        if (IO.eof() == true)
+        {
+            exitProgram() ;
+        }
+        Tokeniser.initialise() ;
+        inputBuffer = Tokeniser.next_token() ;
+        while ( inputBuffer != "?" )
+        {
+            list = list.insert(String.toNumber(inputBuffer)) ;
+            inputBuffer = Tokeniser.next_token() ;
+        }
+        if ( list.count() < 2 )
+        {
+            exitProgram() ;
+        }
+        mean = AverageCal.calMean(list) ;
+        dev = AverageCal.calDeviation(list, Math.round(mean)) ;
+        IO.printString("Mean ") ;
+        IO.printString(Math.toFixed(mean, 2)) ;
+        IO.printString("\n") ;
+        IO.printString("StdDev ") ;
+        IO.printString(Math.toFixed(dev, 2)) ;
+        IO.printString("\n") ;
+    }
+}

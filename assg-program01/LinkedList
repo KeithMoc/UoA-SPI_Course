@@ -1,0 +1,63 @@
+// LinkedList
+class LinkedList
+{
+private:
+    static LinkedList empty ;
+    Number value ;
+    LinkedList tail ;
+
+public:
+    // constructor
+    constructor LinkedList newElement(Number _value)
+    {
+        value = _value ;
+        return this ;
+    }
+    
+    // insert a new element to the list
+    LinkedList insert(Number _value)
+    {
+        if ( this == empty )
+        {
+            return newElement(_value) ;
+        }
+        
+        tail = tail.insert(_value) ;
+        return this ;
+    }
+    
+    // has next element
+    Boolean hasNext()
+    {
+        if ( this == empty )
+        {
+            return false ;
+        }
+        return true;
+    }
+    
+    // next linkded list
+    LinkedList next()
+    {
+        return tail;
+    }
+    
+    // head value of current element
+    Number head()
+    {
+        return value;
+    }
+    
+    // count the length of the list
+    Number count()
+    {
+        if ( this.hasNext() )
+        {
+            return tail.count() + 1;
+        }
+        else
+        {
+            return 0 ;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+// external class
+extern Boolean LinkedList.hasNext() ;
+extern LinkedList LinkedList.next() ;
+extern Number LinkedList.head() ;
+// Average calculation
+class AverageCal
+{
+private:
+public:
+    // calculate average
+    // calculate mean
+    static Number calMean(LinkedList inputs)
+    {
+        Number sum ;
+        Number n ;
+        LinkedList element;
+        element = inputs;
+        while ( element.hasNext() )
+        {
+            n = n + 1 ;
+            sum = sum + element.head() ;
+            element = element.next() ;
+        }
+        return sum/n;
+    }
+    
+    // calculate deviation
+    static Number calDeviation(LinkedList inputs, Number mean)
+    {
+        Number n;
+        Number sum ;
+        Number temp ;
+        LinkedList element;
+        element = inputs;
+        while ( element.hasNext() )
+        {
+            n = n + 1 ;
+            temp = Math.pow(element.head() - mean, 2) ;
+            sum = sum + temp ;
+            element = element.next() ;
+        }
+        return Math.sqrt(sum/(n - 1)) ;
+    }
+}

@@ -1,0 +1,129 @@
+// Tokeniser for reading numbers from stdin
+class Tokeniser
+{
+private:
+    // keep a global with the next character to look at
+    static String ch ;
+
+    //  keep a global with the last token returned - so we can easily spot eoi
+    static String token ;
+
+public:
+    // read next char - readChar returns "" at eoi - we stop reading at eoi
+    static void nextch()
+    {
+        if ( ch != "" )
+        {
+            ch = IO.readChar() ;
+        }
+    }
+    
+    // read digit+
+    static void readDigits()
+    {
+        do
+        {
+            token = token + ch ;
+            nextch() ;
+        }
+        while ( String.isdigit(ch) ) ;
+    }
+
+    // read exponential
+    static void readExponential()
+    {
+        // temporary storing the sign
+        String sign;
+        nextch() ;
+        if ( ch == "+" || ch == "-" )
+        {
+            sign = ch ;
+            nextch() ;
+        }
+
+        if ( String.isdigit(ch) )
+        {
+            token = token + "E" + sign ;
+            readDigits() ;
+        }
+        else
+        {
+            nextch() ;
+        }
+    }
+
+    // read next set of characters and return a token - either a number or ? for eoi
+    static String next_token()
+    {
+        // if not already at eoi - search for another token
+        while ( ch != "" )
+        {   
+            token = "" ;
+
+            // if we have a sign (optinally)
+            if ( ch == "+" || ch == "-" )
+            {
+                token = token + ch ;
+                nextch() ;
+            }
+
+            // if we have a digit - we have a number
+            if ( String.isdigit(ch) )
+            {
+                // do
+                // {
+                //     token = token + ch ;
+                //     nextch() ;
+                // }
+                // while ( String.isdigit(ch) ) ;
+
+                // read digits
+                readDigits() ;
+
+                // if we have a "."
+                if ( ch == ".")
+                {
+                    token = token + ch ;
+                    nextch() ;
+
+                    // if the next is digit
+                    if ( String.isdigit(ch) )
+                    {
+                        readDigits() ;
+                        // if we have "e" or "E"
+                        if ( ch == "e" || ch == "E" )
+                        {
+                            readExponential() ;
+                        }
+                        else
+                        {
+                            nextch() ;
+                        }
+                    }
+                    else
+                    {
+                        token = token + "0" ;
+                        nextch() ;
+                    }
+                }
+
+                return token ;
+            }
+            else
+            {
+                // no number - just skip this character and try again
+                nextch() ;
+            }
+        }
+
+        // we must be at eoi - return "?" as the token
+        token = "?" ;
+        return token ;
+    }
+
+    // initialise the tokeniser
+    static void initialise()
+    {
+        ch = IO.readChar() ;
+    }
+}
